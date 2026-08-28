@@ -10,8 +10,8 @@
 
     <p>Log in to your Aura Globe account</p>
 
-    <form>
-        <label>Email</label><br>
+<form id="login-form">
+    <label>Email</label><br>
         <input type="email" placeholder="Enter your email" required><br><br>
 
         <label>Password</label><br>
@@ -19,7 +19,27 @@
 
         <button type="submit">Login</button>
     </form>
+<script>
+document.getElementById("login-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
 
+    const email = document.querySelector('input[type="email"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    alert("Login successful!");
+    window.location.href = "index.html";
+});
+</script>
     <br>
 
     <button onclick="location.href='signup.html'">
@@ -31,6 +51,16 @@
     <button onclick="location.href='index.html'">
         Go Back
     </button>
+<script src="https://myjvvvkbvbatfmsfornk.supabase.co"></script>
 
+<script>
+const SUPABASE_URL = "YOUR_PROJECT_URL";
+const SUPABASE_KEY = "YOUR_PUBLISHABLE_KEY";
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+</script>
 </body>
 </html>
